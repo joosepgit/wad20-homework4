@@ -24,20 +24,58 @@ router.get('/', authorize, (request, response) => {
 
 router.post('/', authorize,  (request, response) => {
 
+    console.log("Posting...");
     // Endpoint to create a new post
+    let userPost = {
+        text: {required: true},
+        media: {
+            url: {required: true},
+            type: {required: true},
+        }
+    };
 
+    const fieldMissing = {
+        code: null,
+        message: 'Please provide %s field'
+    };
+
+    for (let field in userPost) {
+        if (userPost[field].required === true && !request.body[field]) {
+
+            fieldMissing.code = field;
+            fieldMissing.message = fieldMissing.message.replace('%s', field);
+
+            response.json(fieldMissing, 400);
+            return;
+        }
+    }
+
+    let params = {
+        userId: request.currentUser.id,
+        text: request.body.text,
+        media: {
+            url: request.body.media.url,
+            type: request.body.media.type,
+        }
+    }
+
+
+    PostModel.create(params, () => {
+        response.status(201).json
+    })
 });
 
 
 router.put('/:postId/likes', authorize, (request, response) => {
 
     // Endpoint for current user to like a post
+    //TODO: Olger
 });
 
 router.delete('/:postId/likes', authorize, (request, response) => {
 
     // Endpoint for current user to unlike a post
-
+    //TODO: Olger
 });
 
 module.exports = router;
