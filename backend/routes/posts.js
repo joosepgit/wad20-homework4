@@ -70,12 +70,14 @@ router.put('/:postId/likes', authorize, (request, response) => {
 
     // Endpoint for current user to like a post
     //TODO: Olger
+    console.log("like tuleks lisada!")
 });
 
 router.delete('/:postId/likes', authorize, (request, response) => {
 
     // Endpoint for current user to unlike a post
     //TODO: Olger
+    console.log("like tuleks eemaldada!")
 });
 
 module.exports = router;
