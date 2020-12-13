@@ -71,11 +71,14 @@ router.put('/:postId/likes', authorize, (request, response) => {
     // Endpoint for current user to like a post
     //TODO: Olger
     console.log("like tuleks lisada!");
-    userID=request.currentUser.id;
-    postID=request.params.postId;
+    let userID=request.currentUser.id;
+    let postID=request.params.postId;
     console.log("postid=",postID);
     PostModel.like(userID,postID,(p) => {
         console.log("liketud.");
+        response.json({
+            ok: true
+        })
     });
 });
 
@@ -84,11 +87,14 @@ router.delete('/:postId/likes', authorize, (request, response) => {
     // Endpoint for current user to unlike a post
     //TODO: Olger
     console.log("like tuleks eemaldada!");
-    userID=request.currentUser.id;
-    postID=request.params.postId;
+    let userID=request.currentUser.id;
+    let postID=request.params.postId;
     console.log("postid=",postID);
     PostModel.unlike(userID,postID,(p) => {
         console.log("like removed.");
+        response.json({
+            ok: true
+        })
     });
 });
 
